@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#159da5">
+    <meta name="description" content="FDC Unlocker Server helps repair businesses organize carrier-approved device unlock requests.">
+    <title>FDC - UNLOCKER SERVER | Device Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="firebase-config.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="announcement">
+      <span>For repair shops and device resellers</span>
+      <a href="#services">Explore our service desk <span aria-hidden="true">↗</span></a>
+    </div>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="FDC Unlocker Server home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span class="brand-name">FDC <b>UNLOCKER SERVER</b></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+        <span class="sr-only">Toggle navigation</span><span></span><span></span>
+      </button>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#requests">Request desk</a>
+        <a href="#about">About</a>
+        <button class="auth-button" type="button" id="auth-button">Sign in</button>
+        <button class="nav-button" type="button" id="nav-new-request">Start a request <span aria-hidden="true">↗</span></button>
+      </nav>
+    </header>
+
+    <section class="auth-status" id="auth-status" aria-live="polite" hidden>
+      <span class="auth-status-icon" id="auth-status-icon" aria-hidden="true">!</span>
+      <div class="auth-status-copy"><strong id="auth-status-title"></strong><p id="auth-status-text"></p></div>
+      <div class="auth-status-actions">
+        <button type="button" id="refresh-verification">I’ve verified</button>
+        <button type="button" id="resend-verification">Resend email</button>
+      </div>
+    </section>
+
+    <main id="home" class="page-container">
+      <section class="feature-banner" aria-labelledby="hero-title">
+        <div class="banner-copy">
+          <span class="banner-kicker"><i></i> DEVICE SERVICE DESK</span>
+          <h1 id="hero-title">A clearer path<br>to <span>device freedom.</span></h1>
+          <p>Organize carrier eligibility checks and keep every customer request moving in one place.</p>
+          <button class="banner-button" type="button" id="hero-new-request">Start an eligibility request <span aria-hidden="true">→</span></button>
+          <div class="banner-points"><span>Carrier policy first</span><i></i><span>Clear status updates</span></div>
+        </div>
+        <div class="banner-art" aria-hidden="true">
+          <div class="art-glow"></div>
+          <div class="art-ring ring-back"></div>
+          <div class="art-ring ring-front"></div>
+          <div class="phone phone-back"><div></div></div>
+          <div class="phone phone-front"><div class="phone-speaker"></div><div class="phone-check">✓</div><span>ELIGIBILITY</span><strong>Check complete</strong><small>Carrier review required</small><div class="phone-progress"><i></i></div></div>
+          <div class="art-chip"><span>✓</span> Status, at a glance</div>
+          <span class="art-spark spark-a">✳</span><span class="art-spark spark-b">✦</span>
+        </div>
+        <div class="banner-index"><span>FDC SERVICE DESK</span><span>01 <i></i> 01</span></div>
+      </section>
+
+      <section class="services-section" id="services">
+        <div class="section-heading">
+          <div><span class="section-kicker">BUILT FOR THE WORKSHOP</span><h2>Our service desk</h2></div>
+          <p>Useful tools for keeping eligible device requests organized.</p>
+        </div>
+        <div class="service-list">
+          <article class="service-item">
+            <div class="service-art art-eligibility"><span class="service-icon">✓</span><i class="orbit-small"></i></div>
+            <div class="service-description"><h3>Carrier eligibility request</h3><p>Collect device and carrier details, then organize the next step around carrier requirements.</p><div class="service-tags"><span>ELIGIBILITY FIRST</span><span>REQUEST DESK</span></div></div>
+            <div class="service-action"><span class="availability"><i></i> Request setup</span><button type="button" class="service-button" data-open-request>Start request <span aria-hidden="true">↗</span></button></div>
+          </article>
+          <article class="service-item">
+            <div class="service-art art-tracking"><div class="mini-track"><span></span><span></span><span></span></div></div>
+            <div class="service-description"><h3>Request status tracking</h3><p>Keep pending, attention-needed, and completed requests easy to find for your team.</p><div class="service-tags"><span>TEAM WORKFLOW</span><span>STATUS OVERVIEW</span></div></div>
+            <div class="service-action"><span class="availability"><i></i> Available in dashboard</span><a class="service-button" href="#requests">View requests <span aria-hidden="true">↗</span></a></div>
+          </article>
+          <article class="service-item">
+            <div class="service-art art-shop"><div class="shop-window"><i></i><i></i><i></i><b>FDC</b></div></div>
+            <div class="service-description"><h3>Repair shop workspace</h3><p>A simple request overview for independent repair shops and device resellers.</p><div class="service-tags"><span>FOR INDEPENDENTS</span><span>ONE WORKSPACE</span></div></div>
+            <div class="service-action"><span class="availability"><i></i> Sample workspace</span><a class="service-button" href="#requests">Open dashboard <span aria-hidden="true">↗</span></a></div>
+          </article>
+        </div>
+        <p class="service-note">Carrier approval, eligibility, and turnaround times are determined by the carrier. FDC does not bypass device or account security.</p>
+      </section>
+
+      <section class="requests-section" id="requests">
+        <div class="section-heading request-heading">
+          <div><span class="section-kicker">YOUR WORKSPACE</span><h2>Recent requests</h2></div>
+          <button class="primary-button" type="button" id="new-request"><span>+</span> New request</button>
+        </div>
+        <div class="stats-grid" aria-label="Request summary">
+          <article class="stat-card"><span class="stat-symbol symbol-blue">↗</span><div><span>Active requests</span><strong id="active-total">2</strong></div></article>
+          <article class="stat-card"><span class="stat-symbol symbol-gold">◷</span><div><span>Needs attention</span><strong id="attention-total">1</strong></div></article>
+          <article class="stat-card"><span class="stat-symbol symbol-green">✓</span><div><span>Completed</span><strong id="completed-total">1</strong></div></article>
+        </div>
+        <div class="request-panel">
+          <div class="request-toolbar">
+            <div class="filter-row" role="group" aria-label="Filter requests">
+              <button class="filter-button selected" type="button" data-filter="all" aria-pressed="true">All <span id="all-count">4</span></button>
+              <button class="filter-button" type="button" data-filter="active" aria-pressed="false">In progress</button>
+              <button class="filter-button" type="button" data-filter="attention" aria-pressed="false">Needs attention</button>
+              <button class="filter-button" type="button" data-filter="completed" aria-pressed="false">Completed</button>
+            </div>
+            <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">Search requests</span><input id="request-search" type="search" placeholder="Search requests"></label>
+          </div>
+          <div class="table-wrap">
+            <table class="request-table">
+              <thead><tr><th>DEVICE</th><th>REQUEST ID</th><th>CARRIER</th><th>STATUS</th><th>UPDATED</th></tr></thead>
+              <tbody id="request-list">
+                <tr data-status="active"><td><span class="device-thumb">▯</span><span class="device-name">iPhone 14 Pro</span></td><td class="request-id">UL-1048</td><td>AT&amp;T</td><td><span class="status status-review"><i></i>In review</span></td><td class="updated">Today</td></tr>
+                <tr data-status="attention"><td><span class="device-thumb">▯</span><span class="device-name">Galaxy S23</span></td><td class="request-id">UL-1047</td><td>T-Mobile</td><td><span class="status status-attention"><i></i>Needs info</span></td><td class="updated">Yesterday</td></tr>
+                <tr data-status="completed"><td><span class="device-thumb">▯</span><span class="device-name">iPhone 13 mini</span></td><td class="request-id">UL-1046</td><td>Verizon</td><td><span class="status status-complete"><i></i>Complete</span></td><td class="updated">Oct 1</td></tr>
+                <tr data-status="active"><td><span class="device-thumb">▯</span><span class="device-name">Pixel 8</span></td><td class="request-id">UL-1045</td><td>AT&amp;T</td><td><span class="status status-review"><i></i>Eligibility check</span></td><td class="updated">Oct 1</td></tr>
+              </tbody>
+            </table>
+            <p class="empty-state" id="empty-state" hidden>No matching requests found.</p>
+          </div>
+          <div class="panel-foot"><span>Showing <strong id="visible-count">4</strong> requests</span><span>Demo data · Not connected to carriers</span></div>
+        </div>
+        <p class="data-note">Demo requests are stored in this page only. No carrier service is connected.</p>
+      </section>
+
+      <section class="about-strip" id="about"><span class="about-mark">F</span><p><strong>FDC - UNLOCKER SERVER</strong><br>Clear, carrier-led device request workflows for independent shops.</p><span class="about-disclaimer">No security bypasses. Carrier eligibility required.</span></section>
+      <footer class="footer"><span>© <span id="year"></span> FDC - UNLOCKER SERVER</span><a href="#home">Back to top ↑</a><span>Carrier policy applies to every request.</span></footer>
+    </main>
+
+    <dialog class="request-dialog" id="request-dialog" aria-labelledby="dialog-title">
+      <form id="request-form">
+        <div class="dialog-heading"><div><p class="dialog-kicker">DEVICE SERVICE DESK</p><h2 id="dialog-title">Start a request</h2></div><button class="close-dialog" type="button" aria-label="Close">×</button></div>
+        <label class="form-field">Device model<input name="device" required maxlength="60" placeholder="e.g. iPhone 14 Pro"></label>
+        <label class="form-field">Carrier<select name="carrier" required><option value="" disabled selected>Select carrier</option><option>AT&amp;T</option><option>T-Mobile</option><option>Verizon</option><option>Other</option></select></label>
+        <p class="form-note">Demo only: adding a request does not contact a carrier or guarantee eligibility or approval.</p>
+        <div class="dialog-actions"><button class="secondary-button" type="button" id="cancel-request">Cancel</button><button class="primary-button" type="submit">Add request</button></div>
+      </form>
+    </dialog>
+    <dialog class="request-dialog auth-dialog" id="auth-dialog" aria-labelledby="auth-title">
+      <form id="auth-form">
+        <div class="dialog-heading"><div><p class="dialog-kicker">FDC WORKSPACE</p><h2 id="auth-title">Sign in</h2></div><button class="close-dialog" type="button" id="close-auth" aria-label="Close">×</button></div>
+        <label class="form-field">Gmail address<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@gmail.com"></label>
+        <label class="form-field" id="password-field">Password<input name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="At least 8 characters"></label>
+        <p class="auth-message" id="auth-message" aria-live="polite"></p>
+        <div class="auth-options"><button type="button" class="auth-text-button" id="auth-mode-toggle">Create an account</button><button type="button" class="auth-text-button" id="reset-password">Forgot password?</button></div>
+        <div class="dialog-actions"><button class="secondary-button" type="button" id="cancel-auth">Cancel</button><button class="primary-button" type="submit" id="auth-submit">Sign in</button></div>
+      </form>
+    </dialog>
+  </body>
+</html>
